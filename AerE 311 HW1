@@ -1,25 +1,26 @@
-clear,clc
-M = 0.01:0.01:4;
-A = zeros(1,400);
-for i = 1:length(M)
-   A(i) = (1/M(i))*(0.83333*(1+.2*M(i)^2))^3;
+clear,clc                                                      %Clear window and values
+M = 0.01:0.01:4;                                               %Create M matrix from 0.01 to 4
+A = zeros(1,400);                                              %Create empty A matrix for next steps
+for i = 1:length(M)                                            %For loop for the length of matrix
+   A(i) = (1/M(i))*(0.83333*(1+.2*M(i)^2))^3;                  %Filling A matrix with values
 end
+figure(1)                                                      %Plot figure 
 plot(M,A)
+title('M vs. A')
 
-x = 0.001;
-e = 1e-5;
-for i = 1:700000
-
-    f = (1/x)*(0.83333*(1+.2*x^2))^3;
-    fp = -0.5787/x^2+0.34722+0.208332*x^2+0.023148*x^4;
-
-    x_new = x - f/fp;
-    error = abs(x_new-x);
-    x = x_new;
-    if error < e
-        disp('Completed Newtons Method')
-        disp('X is at ' + x)
-        break
+x = 0.01;                                                      %First ran with 0.001 but used many iterations before finding an answer
+e = 10e-5;                                                     %Set the error as 10e-6 but bumped it down to lower iteration count
+for i = 1:100000                                               %For loop the preforms max iterations of 100,000
+    f = (1/x)*(0.83333*(1+.2*x^2))^3;                          %Calculate value for original equation
+    fp = -0.5787/x^2+0.34722+0.208332*x^2+0.023148*x^4;        %Calculate value for derivative of original equation
+    
+    x_new = x - f/fp;                                          %Calculate new x value for next iteration
+    error = abs(x_new - x);                                    %Calculate error to be used
+    x = x_new;                                                 %Replace x for next iteration
+    if error < e                                               %If error is lower then designated e then it breaks after printing values
+        disp('Completed Newtons Method')                       %Added some formating
+        fprintf('X is at %.10f\n',x_new)
+        break                                                  %Breaks for loop
     end
 end
-disp('Finished with process')
+disp('Finished with process')                                  %Mainly here for testing since it was exceeding iterations sometimes
