@@ -7,10 +7,12 @@ end
 figure(1)                                                      %Plot figure 
 plot(M,A)
 title('M vs. A')
+axis([0,4,0,50])
+hold on
 
-x = 0.01;                                                      %First ran with 0.001 but used many iterations before finding an answer
-e = 10e-5;                                                     %Set the error as 10e-6 but bumped it down to lower iteration count
-for i = 1:100000                                               %For loop the preforms max iterations of 100,000
+x = 0.05;                                                      %First ran with 0.001 but used many iterations before finding an answer
+e = 10e-4;                                                     %Set the error as 10e-6 but bumped it down to lower iteration count
+for i = 1:50000                                                %For loop the preforms max iterations of 100,000
     f = (1/x)*(0.83333*(1+.2*x^2))^3;                          %Calculate value for original equation
     fp = -0.5787/x^2+0.34722+0.208332*x^2+0.023148*x^4;        %Calculate value for derivative of original equation
     
@@ -24,3 +26,4 @@ for i = 1:100000                                               %For loop the pre
     end
 end
 disp('Finished with process')                                  %Mainly here for testing since it was exceeding iterations sometimes
+plot(x,50,'.')                                                 %Plot estimated root point on graph
