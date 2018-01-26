@@ -1,0 +1,25 @@
+clear,clc
+M = 0.01:0.01:4;
+A = zeros(1,400);
+for i = 1:length(M)
+   A(i) = (1/M(i))*(0.83333*(1+.2*M(i)^2))^3;
+end
+plot(M,A)
+
+x = 0.001;
+e = 1e-5;
+for i = 1:700000
+
+    f = (1/x)*(0.83333*(1+.2*x^2))^3;
+    fp = -0.5787/x^2+0.34722+0.208332*x^2+0.023148*x^4;
+
+    x_new = x - f/fp;
+    error = abs(x_new-x);
+    x = x_new;
+    if error < e
+        disp('Completed Newtons Method')
+        disp('X is at ' + x)
+        break
+    end
+end
+disp('Finished with process')
